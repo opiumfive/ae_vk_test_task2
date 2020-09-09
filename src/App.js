@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Home from './panels/Home';
 import Place from './panels/Place';
@@ -129,7 +129,7 @@ const App = () => {
 	const [ order, setOrder ] = useState(JSON.parse((localStorage.getItem('orders') || 'null')) || {});
 
 	return (
-		<Router>
+		<Router basename="vezdekod-03-hotfix-web">
 			<Switch>
 				<Route path="/" exact>
 					<Home foodAreas={FOOD_AREAS} order={order} />
