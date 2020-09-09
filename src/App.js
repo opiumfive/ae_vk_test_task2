@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HashRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Home from './panels/Home';
 import Place from './panels/Place';
@@ -33,7 +33,7 @@ const FOOD_AREAS = [{
 			name: 'Классик',
 			price: 150,
 		}, {
-			id: 'friedPotato',
+			id: 'free',
 			image: OneTowar,
 			name: 'Картофель фри',
 			price: 50,
@@ -127,9 +127,13 @@ const foodsMap = FOOD_AREAS.reduce((result, area) => {
 const App = () => {
 	const [ orderStatuses, setOrderStatuses ] = useState(JSON.parse((localStorage.getItem('orderStatuses') || 'null')) || {});
 	const [ order, setOrder ] = useState(JSON.parse((localStorage.getItem('orders') || 'null')) || {});
-
+	const [ options, setOptions] = useState({
+		faster: true,
+		time: "",
+		selfService: false,
+	});
 	return (
-		<Router basename="vezdekod-03-hotfix-web">
+		<Router>
 			<Switch>
 				<Route path="/" exact>
 					<Home foodAreas={FOOD_AREAS} order={order} />
@@ -152,6 +156,25 @@ const App = () => {
 					<Basket
 						foodAreas={FOOD_AREAS}
 						order={order}
+						options={options}
+						onSetFaster={(value) => {
+							setOptions({
+								...options,
+								faster: value,
+							})
+						}}
+						onSetTime={(value) => {
+							setOptions({
+								...options,
+								time: value,
+							})
+						}} 
+						onSetSelfService={(value) => {
+							setOptions({
+								...options,
+								selfService: value,
+							})
+						}}
 					/>
 				</Route>
 				<Route
@@ -162,10 +185,19 @@ const App = () => {
 						order={order}
 						orderStatuses={orderStatuses}
 						foodAreas={FOOD_AREAS}
-						setFinishedOrder={({ itemId }) => {
+						setCancelOrder={({itemId}) => {
+
 							const nextStatuses = {...orderStatuses};
 
 							nextStatuses[itemId] = 'CANCELED';
+
+							setOrderStatuses(nextStatuses);
+							localStorage.setItem('orderStatuses', JSON.stringify(nextStatuses));
+						}}
+						setFinishedOrder={({ itemId }) => {
+							const nextStatuses = {...orderStatuses};
+
+							nextStatuses[itemId] = 'DONE';
 
 							setOrderStatuses(nextStatuses);
 							localStorage.setItem('orderStatuses', JSON.stringify(nextStatuses));

@@ -7,7 +7,8 @@ import edit from '../img/edit.svg';
 import './place.css';
 
 
-const Place = ({ item, order, onIncrementPosition, onDecrementPosition, area }) => {
+const Place = ({ item, order, onIncrementPosition, onDecrementPosition, area, location }) => {
+  const {pathname} = location;
   const price = useMemo(() => {
     const foodIds = new Set((item.foods || []).map(item => item.id));
 
@@ -25,7 +26,6 @@ const Place = ({ item, order, onIncrementPosition, onDecrementPosition, area }) 
 
     return accounting.formatNumber(result, 0, ' ');
   }, [ order, item ]);
-
   return (
     <div className="Place">
       <header className="Place__header">
@@ -101,7 +101,7 @@ const Place = ({ item, order, onIncrementPosition, onDecrementPosition, area }) 
         )))}
       </ul>
       <footer className="Place__footer">
-        <Link to={`/basket/${area.id}/${item.id}`} className="Place__order">
+        <Link style={{pointerEvents: +price ? 'auto' : 'none'}} to={+price ? `/basket/${area.id}/${item.id}` : pathname} className="Place__order">
           Оформить заказ ({price})
         </Link>
       </footer>
