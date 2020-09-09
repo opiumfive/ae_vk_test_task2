@@ -1,12 +1,14 @@
 {
+  "homepage": "https://opiumfive.github.io/ae_vk_test_task2",
   "name": "kozodoi-club-hack",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
     "start": "cross-env PORT=10888 react-scripts start",
-    "build": "react-scripts build",
-    "surge-deploy": "npm run build && surge ./build --domain kozodoi-club-hack.surge.sh"
+    "build": "react-scripts build"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +17,8 @@
     "cross-env": "^5.2.0",
     "react-hot-loader": "^4.9.0",
     "react-scripts": "^3.1.2",
-    "surge": "^0.21.3"
+    "surge": "^0.21.3",
+	"gh-pages": "^3.1.0"
   },
   "dependencies": {
     "@vkontakte/icons": "^1.10.0",

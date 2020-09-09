@@ -7,6 +7,14 @@ import Checkbox from './Checkbox';
 import edit from '../img/edit.svg';
 import './place.css';
 
+Object.size = function(obj) {
+  var size = 0, key;
+  for (key in obj) {
+      if (obj.hasOwnProperty(key)) size++;
+  }
+  return size;
+};
+
 
 const Basket = ({ match: { params: { areaId, itemId }}, foodAreas, order }) => {
   const [ faster, setFaster ] = useState(true);
@@ -121,7 +129,7 @@ const Basket = ({ match: { params: { areaId, itemId }}, foodAreas, order }) => {
         </div>
         <div className="Place__choice-item">
           <span>Назначить</span>
-          <input
+          <input type="time"
             value={time}
             onFocus={() => {
               setFaster(false);
@@ -147,8 +155,8 @@ const Basket = ({ match: { params: { areaId, itemId }}, foodAreas, order }) => {
         </div>
       </div>
       <footer className="Place__footer">
-        <Link to={`/order/${area.id}/${item.id}`} className="Place__order">
-          Оплатить {price}
+        <Link to={Object.size(products) == 0 ? this : `/order/${area.id}/${item.id}`} className="Place__order">
+          {Object.size(products) == 0 ? 'Нет товаров' : 'Оплатить ' + price}
         </Link>
       </footer>
     </div>
