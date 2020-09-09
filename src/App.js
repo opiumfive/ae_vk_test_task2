@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { HashRouter  as Router, Switch, Route } from 'react-router-dom';
 
 import Home from './panels/Home';
 import Place from './panels/Place';
@@ -33,7 +33,7 @@ const FOOD_AREAS = [{
 			name: 'Классик',
 			price: 150,
 		}, {
-			id: 'free',
+			id: 'friedPotato',
 			image: OneTowar,
 			name: 'Картофель фри',
 			price: 50,
@@ -133,7 +133,7 @@ const App = () => {
 		selfService: false,
 	});
 	return (
-		<Router>
+		<Router basename="ae_vk_test_task2">
 			<Switch>
 				<Route path="/" exact>
 					<Home foodAreas={FOOD_AREAS} order={order} />
